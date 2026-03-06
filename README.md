@@ -1,6 +1,6 @@
 # TestAutomation App
 
-A **simple web app** used to validate **UI test automation**. It provides the same “Create Test” flow in three different implementations so you can run automation (e.g. [no-locator-automation]) against different JavaScript UI stacks.
+A **simple web app** used to validate **UI test automation**. It provides the same “Create Test” flow in three different implementations so you can run automation (e.g. [no-locator-automation](https://github.com/ravimaharjan/no-locator-automation)) against different JavaScript UI stacks.
 
 ## Purpose
 
@@ -50,4 +50,5 @@ Each form has the same logical fields (e.g. Project Name, Test Case Name, Test T
    - **Create Test2** – `http://localhost:3000/#/test2`
    - **Create Test3** – `http://localhost:3000/#/test3`
 
-Then run your no-locator-automation testcase against these URLs to verify discovery and steps on each implementation.
+Then run your [no-locator-automation](https://github.com/ravimaharjan/no-locator-automation) testcase against these URLs to verify discovery and steps on each implementation.
+
