@@ -49,7 +49,6 @@ export default function MainApp({ onLogout }) {
         {viewId === 'home' && (
           <div className="view">
             <h2>Home</h2>
-            <p>Use the menu above to go to Test or Participant.</p>
           </div>
         )}
         {viewId === 'test' && <TestView />}
