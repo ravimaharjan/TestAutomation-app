@@ -16,6 +16,8 @@ const initialForm = {
   environment: '',
   browser: '',
   description: '',
+  isSmokeTest: false,
+  testFile: null,
 };
 
 export default function TestView() {
@@ -34,8 +36,12 @@ export default function TestView() {
   }
 
   function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    const { name, type, value, checked, files } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]:
+        type === 'checkbox' ? checked : type === 'file' ? (files && files[0]) || null : value,
+    }));
   }
 
   function handleSubmit(e) {
@@ -149,6 +155,29 @@ export default function TestView() {
                       value={form.description}
                       onChange={handleChange}
                     />
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group form-group-inline">
+                      <label htmlFor="isSmokeTest">
+                        <input
+                          type="checkbox"
+                          id="isSmokeTest"
+                          name="isSmokeTest"
+                          checked={form.isSmokeTest}
+                          onChange={handleChange}
+                        />
+                        <span className="ml-2">Smoke test</span>
+                      </label>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="testFile">Attach Test Data File</label>
+                      <input
+                        type="file"
+                        id="testFile"
+                        name="testFile"
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="modal-form-actions">

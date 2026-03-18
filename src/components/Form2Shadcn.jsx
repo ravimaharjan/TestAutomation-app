@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Label from '@radix-ui/react-label';
+import * as Checkbox from '@radix-ui/react-checkbox';
 import {
   TEST_TYPE_OPTIONS,
   PRIORITY_OPTIONS,
@@ -20,11 +21,18 @@ export default function Form2Shadcn() {
     environment: '',
     browser: '',
     description: '',
+    isSmokeTest: false,
+    testFile: null,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    setFormData((prev) => ({ ...prev, testFile: file || null }));
   };
 
   const handleSubmit = (e) => {
@@ -40,6 +48,8 @@ export default function Form2Shadcn() {
       environment: '',
       browser: '',
       description: '',
+      isSmokeTest: false,
+      testFile: null,
     });
     setTimeout(() => showSuccessToast(formData.testCaseName), 100);
   };
@@ -199,6 +209,44 @@ export default function Form2Shadcn() {
                   placeholder="Test scenario description..."
                   className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox.Root
+                    id="f2-isSmokeTest"
+                    checked={formData.isSmokeTest}
+                    onCheckedChange={(checked) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        isSmokeTest: checked === true,
+                      }))
+                    }
+                    className="peer h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <Checkbox.Indicator className="flex items-center justify-center text-primary">
+                      ✓
+                    </Checkbox.Indicator>
+                  </Checkbox.Root>
+                  <Label.Root
+                    htmlFor="f2-isSmokeTest"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Smoke test
+                  </Label.Root>
+                </div>
+                <div className="space-y-2">
+                  <Label.Root htmlFor="f2-testFile" className="text-sm font-medium leading-none">
+                    Attach Test Data File
+                  </Label.Root>
+                  <input
+                    id="f2-testFile"
+                    name="testFile"
+                    type="file"
+                    onChange={handleFileChange}
+                    className="flex h-10 w-full cursor-pointer rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  />
+                </div>
               </div>
 
               <div className="flex justify-end gap-2 pt-2">

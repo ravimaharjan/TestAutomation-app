@@ -3,13 +3,15 @@ import TestView from './components/TestView.jsx';
 import Form2Shadcn from './components/Form2Shadcn.jsx';
 import Form3Formik from './components/Form3Formik.jsx';
 
+const LOGIN_STORAGE_KEY = 'testmanager_logged_in';
+
 function getSegment() {
   const rawHash = window.location.hash || '#/home';
   const hash = rawHash.slice(1).replace(/^#/, '');
   return (hash.split('/').filter(Boolean)[0]) || 'home';
 }
 
-export default function MainApp() {
+export default function MainApp({ onLogout }) {
   const [segment, setSegment] = useState(getSegment);
 
   useEffect(() => {
@@ -19,6 +21,12 @@ export default function MainApp() {
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
+
+  function handleLogout() {
+    sessionStorage.removeItem(LOGIN_STORAGE_KEY);
+    window.location.hash = '';
+    onLogout();
+  }
 
   const viewId = segment;
   const isActive = (id) => viewId === id;
@@ -31,6 +39,9 @@ export default function MainApp() {
           <a href="#/test" className={`nav-link ${isActive('test') ? 'active' : ''}`}>Create Test1</a>
           <a href="#/test2" className={`nav-link ${isActive('test2') ? 'active' : ''}`}>Create Test2</a>
           <a href="#/test3" className={`nav-link ${isActive('test3') ? 'active' : ''}`}>Create Test3</a>
+          <button type="button" id="logout-btn" className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </nav>
       </header>
 

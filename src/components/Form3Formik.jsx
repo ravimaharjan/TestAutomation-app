@@ -18,6 +18,8 @@ const initialValues = {
   environment: '',
   browser: '',
   description: '',
+  isSmokeTest: false,
+  testFile: null,
 };
 
 const selectOptions = {
@@ -174,6 +176,27 @@ export default function Form3Formik() {
                         placeholder="Test scenario description..."
                         className="formik-input formik-textarea"
                       />
+                    </div>
+                    <div className="formik-row">
+                      <div className="formik-field formik-field-inline">
+                        <label className="formik-checkbox-label" htmlFor="f3-isSmokeTest">
+                          <Field id="f3-isSmokeTest" name="isSmokeTest" type="checkbox" />
+                          <span className="ml-2">Smoke test</span>
+                        </label>
+                      </div>
+                      <div className="formik-field">
+                        <label htmlFor="f3-testFile">Attach Test Data File</label>
+                        <input
+                          id="f3-testFile"
+                          name="testFile"
+                          type="file"
+                          onChange={(event) => {
+                            const file = event.currentTarget.files && event.currentTarget.files[0];
+                            setFieldValue('testFile', file || null);
+                          }}
+                          className="formik-input"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="formik-form-actions">
